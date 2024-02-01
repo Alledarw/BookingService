@@ -1,0 +1,11 @@
+.idea
+venv/
+__pycache__/
+.vscode/
+~
+.pytest_cache
+
+config.py
+*_test*.*
+*test_*.*
+/test/*
