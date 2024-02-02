@@ -1,4 +1,5 @@
 from flask import (Flask,render_template)
+import json
 
 from logic.service import service
 from logic.http_request import http_request
@@ -11,15 +12,15 @@ app = Flask(__name__)
 # #################### BACKEND ##########################
 @app.route("/backend/services", methods=["GET"])
 def all_task():
-    return service.get_all_services()
+    return json.dumps(service.get_all_services(), indent=2)
 
 
 # #################### FRONTEND ##########################
 @app.route('/', methods=['GET'], endpoint="home")
 def home():
-    filter_items = http_request.request_all_services()
-    print(filter_items)
-    return render_template("home.html")
+    service_items = http_request.request_all_services()
+    print(service_items)
+    return render_template("home.html", service_items=service_items)
 
 
 # -------- ERROR HANDLER  ------------

@@ -4,4 +4,23 @@
 
 {% block content %} 
   <h1> Hello, welcome to booking system </h1>
+
+  {% if service_items %} 
+          {% for item in service_items %}
+            {{ item.service_name }} <br>
+            {{ item.description }} <br>
+            {{ item.image }} <br>
+            Staff <br>
+            {% for staff in item.staffs %}
+              {{ staff.staff_name}}  <br>
+            {% endfor %}
+
+            <br> <br>
+
+          {% endfor %}
+         
+  {% else %}
+    no service
+  {% endif %}
+
 {% endblock %}

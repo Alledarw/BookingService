@@ -2,8 +2,7 @@
 class service: 
 
     def get_all_services():
-        return {
-            "services": [
+        return [
                 {
                 "service_id": "1",
                 "service_name": "Klippning",
@@ -11,7 +10,7 @@ class service:
                 "image": "https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/klippning.svg",
                 "price": "200",
                 "time_in_minutes": "45",
-                "staff": [
+                "staffs": [
                     {
                     "staff_id": "1",
                     "staff_name": "Lee"
@@ -29,7 +28,7 @@ class service:
                 "image": "https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/balayage.svg",
                 "price": "2000",
                 "time_in_minutes": "120",
-                "staff": [
+                "staffs": [
                     {
                     "staff_id": "1",
                     "staff_name": "Lee"
@@ -37,4 +36,3 @@ class service:
                 ]
                 }
             ]
-            }
