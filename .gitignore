@@ -9,3 +9,4 @@ config.py
 *_test*.*
 *test_*.*
 /test/*
+*dummy*
