@@ -1,9 +1,9 @@
 from flask import (Flask,render_template)
 import json
 
-from logic.service import service
-from logic.http_request import http_request
-import logic.utility as utility
+from backend.backend import backend
+from frontend.http_request import http_request
+import frontend.utility as utility
  
 
 app = Flask(__name__)
@@ -12,7 +12,7 @@ app = Flask(__name__)
 # #################### BACKEND ##########################
 @app.route("/backend/services", methods=["GET"])
 def all_task():
-    return json.dumps(service.get_all_services(), indent=2)
+    return json.dumps(backend.request_all_services(), indent=2)
 
 
 # #################### FRONTEND ##########################
