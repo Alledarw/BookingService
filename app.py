@@ -1,4 +1,4 @@
-from flask import (Flask,render_template)
+from flask import (Flask, render_template)
 import json
 
 from backend.backend import backend
@@ -27,3 +27,7 @@ def home():
 app.register_error_handler(404, utility.page_404)
 app.register_error_handler(405, utility.page_405)
 app.register_error_handler(401, utility.page_401)
+
+# For testing in Pycharm IDE
+# if __name__ == "__main__":
+#    app.run(debug=True)
