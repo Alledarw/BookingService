@@ -1,8 +1,9 @@
+import json
 from dotenv import load_dotenv
 from psycopg2 import DatabaseError, connect
 import os
 
-class connect_db: 
+class connection: 
     def __init__(self):
         self.conn = None
         self.load_config()
@@ -35,6 +36,28 @@ class connect_db:
                     cursor.close()
         else: 
             return None
+        
+    def execute_return_attributed(self,query, parameters=None, fetchall=False):
+        if self.conn:
+            try:
+                with self.conn.cursor() as cursor:
+                    cursor.execute(query, parameters)
+                    results = cursor.fetchall() 
+                    items = []
+                    for result in [json.dumps(item[0], indent=2) for item in results]:
+                        items.append(result)
+
+                    items = [json.loads(item) for item in items]
+                    
+                    return items
+            except Exception as e:
+                return None
+            finally:
+                # Close the cursor
+                if cursor:
+                    cursor.close()
+        else: 
+            return None
 
 
     def close_connection(self):
@@ -43,13 +66,13 @@ class connect_db:
 
 
 # Example query to test the execute_query function
-db = connect_db() 
-test_query = "SELECT * FROM service"
-result = db.execute_query(test_query, fetchall=True)
-if result:
-    print(result)
-else:
-    print("Query Fail") 
+# db = connection() 
+# test_query = "SELECT * FROM service"
+# result = db.execute_query(test_query, fetchall=True)
+# if result:
+#     print(result)
+# else:
+#     print("Query Fail") 
 
 
 

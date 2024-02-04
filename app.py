@@ -1,18 +1,22 @@
 from flask import (Flask, render_template)
 import json
 
-from backend.backend import backend
+from backend.backend import Backend
 from frontend.http_request import http_request
 import frontend.utility as utility
  
 
 app = Flask(__name__)
 
+backend = Backend()
+
 
 # #################### BACKEND ##########################
 @app.route("/backend/services", methods=["GET"])
-def all_task():
-    return json.dumps(backend.request_all_services(), indent=2)
+def all_service():
+    services = backend.request_all_services()
+    print(services)
+    return services
 
 
 # #################### FRONTEND ##########################
