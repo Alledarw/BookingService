@@ -1,15 +1,12 @@
 from flask import (Flask, render_template)
-import json
 
 from backend.backend import Backend
 from frontend.http_request import http_request
 import frontend.utility as utility
  
-
 app = Flask(__name__)
 
 backend = Backend()
-
 
 # #################### BACKEND ##########################
 @app.route("/backend/services", methods=["GET"])

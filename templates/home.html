@@ -7,15 +7,15 @@
 
   {% if service_items %} 
           {% for item in service_items %}
-            ==================== <br>
-            service_code -> {{ item.service_code }} <br>
-            service_name -> {{ item.service_name }} <br>
-            price -> {{ item.price }} <br>
-            description -> {{ item.description }} <br>
-            image -> {{ item.image }} <br>
-            Staff <br>
+              ==================== <br>
+              service_code -> {{ item.service_code }} <br>
+              service_name -> {{ item.service_name }} <br>
+              price -> {{ item.price }} <br>
+              description -> {{ item.description }} <br>
+              image -> {{ item.image }} <br>
+              Staff <br>
             {% for staff in item.staff %}
-            staff_code -> {{ staff.staff_code}}  <br>
+              staff_code -> {{ staff.staff_code}}  <br>
               staff_name -> {{ staff.staff_name}}  <br>
               image -> {{ staff.image}}  <br>
             {% endfor %}
