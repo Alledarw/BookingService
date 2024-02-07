@@ -1,26 +1,34 @@
-
 {% extends 'base.html' %}
 {% block title %} Welcome title {% endblock %}
 
-{% block content %} 
-  <h1> Hello, welcome to booking system </h1>
+{% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4">Our Services</h1>
 
-  {% if service_items %} 
-          {% for item in service_items %}
-            {{ item.service_name }} <br>
-            {{ item.description }} <br>
-            {{ item.image }} <br>
-            Staff <br>
-            {% for staff in item.staffs %}
-              {{ staff.staff_name}}  <br>
+  <div class="row">
+    {% if service_items %}
+    {% for item in service_items %}
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"> {{ item.service_name }} </h5>
+          <p class="card-text">{{ item.description }} </p>
+          <img class="card-img-top" alt="{{ item.service_name }}" src="{{ item.image }}">
+          <h5 class="card-title">Staff</h5>
+          {% for staff in item.staffs %}
+          <h6 class="card-text">{{ staff.staff_name}} </h5>
             {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
 
-            <br> <br>
-
-          {% endfor %}
-         
-  {% else %}
-    no service
-  {% endif %}
+    {% else %}
+    <div class="">
+      <h3 class="">No services </h3>
+    </div>
+    {% endif %}
+  </div>
+</div>
 
 {% endblock %}
