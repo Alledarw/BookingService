@@ -2,17 +2,34 @@
 {% block title %} Welcome title {% endblock %}
 
 {% block content %}
-  <h1>Hello, welcome to the booking system</h1>
+   <div class="my-4"> <!-- Add margin -->
+    <h1 class="text-center">Hello, welcome to the booking system</h1>
+  </div>
 
-  {% if staff_items %}
-    {% for staff in staff_items %}
-      ==================== <br>
-      staff_code -> {{ staff.staff_code }} <br>
-      staff_name -> {{ staff.staff_name }} <br>
-      image -> {{ staff.image }} <br>
-    {% endfor %}
-  {% else %}
-    no staff
-  {% endif %}
-
+  <div class="container">
+    <div class="row justify-content-center">
+      {% if staff_items %}
+        {% for staff in staff_items %}
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Staff Information</h5>
+                <p class="card-text">
+                  staff_code -> {{ staff.staff_code }} <br>
+                  staff_name -> {{ staff.staff_name }} <br>
+                  staff_image -> {{ staff.image }} <br>
+                </p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-12">
+          <div class="alert alert-warning" role="alert">
+            No staff available.
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}
