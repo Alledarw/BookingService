@@ -21,7 +21,7 @@ def all_service():
 # #################### FRONTEND ##########################
 @app.route('/', methods=['GET'], endpoint="home")
 def home():
-    service_items = http_request.request_all_services()
+    service_items = service.get_all_services()
     print(service_items)
     return render_template("home.html", service_items=service_items)
 
@@ -52,4 +52,4 @@ app.register_error_handler(401, utility.page_401)
 
 # For testing in Pycharm IDE
 #if __name__ == "__main__":
-#   app.run(debug=True)
+#  app.run(debug=True)
