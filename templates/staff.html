@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% block title %} Welcome title {% endblock %}
 
+{% block head %}
+    {{ super() }}
+    <!-- No need to include the Bootstrap CSS again, as it's included in the base.html -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='staff_styles.css') }}">
+{% endblock %}
+
 {% block content %}
    <div class="my-4"> <!-- Add margin -->
     <h1 class="text-center">Hello, welcome to the booking system</h1>
@@ -15,7 +21,7 @@
               <div class="card-body">
                 <h5 class="card-title">Staff Information</h5>
                 <p class="card-text">
-                  staff_code -> {{ staff.staff_code }} <br>
+                  staff_id -> {{ staff.staff_id }} <br>
                   staff_name -> {{ staff.staff_name }} <br>
                   staff_image -> {{ staff.image }} <br>
                 </p>
@@ -31,5 +37,31 @@
         </div>
       {% endif %}
     </div>
+
+    {% if selected_service %}
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card">
+            <img src="{{ selected_service.image }}" class="card-img-top" alt="Service Image">
+            <div class="card-body-service">
+              <h5 class="card-title">{{ selected_service.service_name }}</h5>
+              <p class="card-text">
+                Description: {{ selected_service.description }} <br>
+                Price: {{ selected_service.price }} <br>
+                Time in Minutes: {{ selected_service.time_in_minutes }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="alert alert-warning" role="alert">
+            No service details available.
+          </div>
+        </div>
+      </div>
+    {% endif %}
   </div>
 {% endblock %}
