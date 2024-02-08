@@ -14,7 +14,6 @@ backend = Backend()
 @app.route("/backend/services", methods=["GET"])
 def all_service():
     services = backend.request_all_services()
-    print(services)
     return services
 
 
@@ -22,7 +21,6 @@ def all_service():
 @app.route('/', methods=['GET'], endpoint="home")
 def home():
     service_items = service.get_all_services()
-    print(service_items)
     return render_template("home.html", service_items=service_items)
 
 
@@ -51,5 +49,5 @@ app.register_error_handler(405, utility.page_405)
 app.register_error_handler(401, utility.page_401)
 
 # For testing in Pycharm IDE
-#if __name__ == "__main__":
+# if __name__ == "__main__":
 #  app.run(debug=True)

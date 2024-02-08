@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 from psycopg2 import DatabaseError, connect
 import os
 
-class connection: 
+
+class connection:
     def __init__(self):
         self.conn = None
         self.load_config()
@@ -16,39 +17,40 @@ class connection:
                 dbname=os.getenv("DB_NAME"),
                 user=os.getenv("DB_USER"),
                 host=os.getenv("DB_HOST"),
+                port=os.getenv("DB_PORT"),
                 # Retrieves the password from the .env file
                 password=os.getenv("DB_PASSWORD")
             )
         except Exception as e:
             return print(" ++ " + e)
-        
-    def execute_query(self,query, parameters=None, fetchall=False):
+
+    def execute_query(self, query, parameters=None, fetchall=False):
         if self.conn:
             try:
                 with self.conn.cursor() as cursor:
                     cursor.execute(query, parameters)
-                    return cursor.fetchall() 
+                    return cursor.fetchall()
             except Exception as e:
                 return None
             finally:
                 # Close the cursor
                 if cursor:
                     cursor.close()
-        else: 
+        else:
             return None
-        
-    def execute_return_attributed(self,query, parameters=None, fetchall=False):
+
+    def execute_return_attributed(self, query, parameters=None, fetchall=False):
         if self.conn:
             try:
                 with self.conn.cursor() as cursor:
                     cursor.execute(query, parameters)
-                    results = cursor.fetchall() 
+                    results = cursor.fetchall()
                     items = []
                     for result in [json.dumps(item[0], indent=2) for item in results]:
                         items.append(result)
 
                     items = [json.loads(item) for item in items]
-                    
+
                     return items
             except Exception as e:
                 return None
@@ -56,9 +58,8 @@ class connection:
                 # Close the cursor
                 if cursor:
                     cursor.close()
-        else: 
+        else:
             return None
-
 
     def close_connection(self):
         if self.conn:
@@ -66,14 +67,13 @@ class connection:
 
 
 # Example query to test the execute_query function
-# db = connection() 
+# db = connection()
 # test_query = "SELECT * FROM service"
 # result = db.execute_query(test_query, fetchall=True)
 # if result:
 #     print(result)
 # else:
-#     print("Query Fail") 
-
+#     print("Query Fail")
 
 
 # # Setting up connection to local database
@@ -107,4 +107,4 @@ class connection:
 # if result:
 #     print(result)
 # else:
-#     print("No data found.") 
+#     print("No data found.")
