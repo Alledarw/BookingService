@@ -7,28 +7,26 @@
   <h3 class="text-center">Choose a service</h3>
 </div>
 
+
 {% if service_items %}
-<div class="container">
-  <div class="row justify-content-center">
-    {% for item in service_items %}
-    <div class="col-md-6 col-lg-4 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Service Information</h5>
-          <p class="card-text">
-            ==================== <br>
-            service_id -> {{ item.service_id }} <br>
-            service_name -> {{ item.service_name }} <br>
-            price -> {{ item.price }} <br>
-            description -> {{ item.description }} <br>
-            image -> {{ item.image }} <br>
-          </p>
-          <button class="btn btn-light btn-danger">Book Now</button>
-        </div>
+<div class="container row">
+  {% for item in service_items %}
+  <div class="col-md-6 col-lg-4 mb-4">
+    <div class="card">
+      <img src="{{ item.image }}" class="card-img-top" alt="Service Image">
+      <div class="card-body-service">
+        <h5 class="card-title">{{ item.service_name }}</h5>
+        <p class="card-text">
+          Description: {{ item.description }} <br>
+          Price: {{ item.price }} <br>
+          Time in Minutes: {{ item.time_in_minutes }}
+        </p>
       </div>
     </div>
-    {% endfor %}
   </div>
+
+  {% endfor %}
+
 </div>
 {% else %}
 <div class="container">

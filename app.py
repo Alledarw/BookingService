@@ -1,6 +1,5 @@
 from flask import (Flask, render_template)
 import json
-from backend.service import service
 from backend.backend import Backend
 from frontend.http_request import http_request
 import frontend.utility as utility
@@ -20,13 +19,13 @@ def all_service():
 # #################### FRONTEND ##########################
 @app.route('/', methods=['GET'], endpoint="home")
 def home():
-    service_items = service.get_all_services()
-    return render_template("home.html", service_items=service_items)
+    backend.service_items = backend.request_all_services()
+    return render_template("home.html", service_items=backend.service_items)
 
 
 @app.route('/staff/<service_code>', methods=['GET'])
 def staff(service_code):
-    services = service.get_all_services()
+    services = backend.request_all_services()
     selected_service = None
     for service_item in services:
         if service_code == service_item.get("service_id"):
