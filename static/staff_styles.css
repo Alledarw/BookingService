@@ -3,6 +3,7 @@
     border: 1px solid #ff80ab;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100%
 }
 
 .card-text {
@@ -10,11 +11,13 @@
 }
 
 .bg-lightpink {
-    background-color: #ffcccc;
-
+    background-color: #ffdddd;
 }
 
 .bg-lightblue {
     background-color: #cce5ff;
-    /* Light blue color */
+}
+
+.bg-navcolor {
+    background-color: #ff80ab;
 }

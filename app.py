@@ -24,9 +24,10 @@ def home():
 
 @app.route('/staff/<service_code>', methods=['GET'])
 def staff(service_code):
-    backend.service_items = backend.request_all_services() 
-    outcome = next((item for item in backend.service_items if item['service_code'] == service_code), None)
- 
+    backend.service_items = backend.request_all_services()
+    outcome = next(
+        (item for item in backend.service_items if item['service_code'] == service_code), None)
+
     return render_template("staff.html", staff_items=outcome["staff"], selected_service=outcome)
 
 
@@ -38,3 +39,5 @@ app.register_error_handler(401, utility.page_401)
 # For testing in Pycharm IDE
 # if __name__ == "__main__":
 #  app.run(debug=True)
+if __name__ == "__main__":
+    app.run(port=8000)
