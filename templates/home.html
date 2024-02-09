@@ -2,8 +2,8 @@
 {% block title %} Welcome title {% endblock %}
 
 {% block content %}
-<div class="text-center ">
-  <h1 m-4>Choose a Service</h1>
+<div class="text-center  ">
+  <p class="display-4 ">Choose a Service</p>
 </div>
 
 {% if service_items %}
@@ -17,6 +17,7 @@
         <p class="display-5 my-2 text-primary fw-bold">Price: {{ item.price }} </p>
         <p class="card-text mx-1 text-muted d-none d-xxl-block">Description: {{ item.description }} </p>
         <p class="card-text text-dark display-6">Time in Minutes: {{ item.time_in_minutes }}</p>
+        <a class="btn btn-outline-warning my-2 my-sm-0">Book Now</a>
       </div>
     </div>
   </div>
