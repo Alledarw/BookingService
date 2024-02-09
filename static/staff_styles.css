@@ -7,6 +7,9 @@
     background-color: #ffd9e1;
 }
 
+.card-body-service {
+    background-color: #fff;
+}
 .card-title {
     color: #cc0000;
 }

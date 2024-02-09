@@ -80,8 +80,8 @@ class service:
     "time_in_minutes": "120",
     "staffs": [
         {
-        "staff_id": "1",
-        "staff_name": "Lee"
+        "staff_id": "3",
+        "staff_name": "Florinel"
         }
     ]
     }
