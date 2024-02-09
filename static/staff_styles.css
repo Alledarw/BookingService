@@ -1,19 +1,20 @@
 .card {
-    background-color: #ffd9e1;
-    border: 1px solid #ff9999;
-}
-
-.card-body {
-    background-color: #ffd9e1;
-}
-
-.card-body-service {
-    background-color: #fff;
-}
-.card-title {
-    color: #cc0000;
+    background-color: #fce4ec;
+    border: 1px solid #ff80ab;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-text {
-    color: #660000;
+    color: #880e4f;
+}
+
+.bg-lightpink {
+    background-color: #ffcccc;
+
+}
+
+.bg-lightblue {
+    background-color: #cce5ff;
+    /* Light blue color */
 }

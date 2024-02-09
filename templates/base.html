@@ -9,6 +9,8 @@
   <title>{% block title %}{% endblock %} - </title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='staff_styles.css') }}">
+
 </head>
 
 <body>
@@ -26,11 +28,27 @@
     </div>
   </nav>
 
-
-  <div class="container-fluid">
-    {% block content %}{% endblock %}
-  </div>
-
+  <section class="bg-lightpink">
+    <div class="container-lg ">
+      {% block content %}{% endblock %}
+    </div>
+  </section>
+  <section class="bg-lightblue">
+    <div class="container-lg">
+      <footer class=" text-dark py-4">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Opening Hours</h5>
+            <p>Monday - Friday: 9:00 AM - 8:00 PM</p>
+            <p>Saturday: 9:00 AM - 5:00 PM</p>
+            <p>Sunday: Closed</p>
+          </div>
+        </div>
+        <hr>
+        <p class="text-center text-muted">&copy; 2024 Hair Salon. All rights reserved.</p>
+      </footer>
+    </div>
+  </section>
   {% block javascript %}{% endblock %}
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
