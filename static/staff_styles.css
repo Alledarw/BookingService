@@ -4,9 +4,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.card-text {
-    color: #880e4f;
-}
+
 
 .bg-lightpink {
     background-color: #ffdddd;
@@ -16,8 +14,8 @@
     background-color: #cce5ff;
 }
 
-.bg-navcolor {
-    background-color: #ff80ab;
+.navcolor {
+    background-color: rgb(186, 87, 186);
 }
 
 .custom-image-size {
@@ -27,4 +25,8 @@
 
     object-fit: cover;
     /* Maintain aspect ratio and cover entire space */
+}
+
+.bg-purple {
+    background: plum;
 }

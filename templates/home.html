@@ -6,39 +6,36 @@
   <p class="display-4 ">Choose a Service</p>
 </div>
 
-{% if service_items %}
-<div class="row align-items-center justify-content-center">
-  {% for item in service_items %}
-  <div class="col-sm-6 col-md-4 col-lg-3 mb-3 ">
-    <div class="card border-0 ">
-
-
-      <img src="{{ item.image }}" class=" card-img-top mx-auto d-block custom-image-size " alt="Service Image">
-
-
-
-
-      <div class="card-body text-center py-2">
-        <p class="card-title">{{ item.service_name }}</p>
-        <p class="display-5 my-2 text-primary fw-bold">Price: {{ item.price }} </p>
-        <p class="card-text mx-1 text-muted d-none d-xxl-block">Description: {{ item.description }} </p>
-        <p class="card-text text-dark display-6">Time in Minutes: {{ item.time_in_minutes }}</p>
-        <a class="btn btn-outline-warning my-2 my-sm-0">Book Now</a>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
-
-</div>
-{% else %}
 <div class="container">
-  <div class="row justify-content-center">
-    <div class="col-12">
-      <div class="alert alert-warning" role="alert">
-        No service available.
+  {% if service_items %}
+
+  <div class="row align-items-center justify-content-center">
+    {% for item in service_items %}
+    <div class="col-sm-6 col-md-4 col-lg-3 mb-3 ">
+      <div class="card border-0 ">
+        <img src="{{ item.image }}" class=" card-img-top mx-auto d-block custom-image-size " alt="Service Image">
+        <div class="card-body text-center py-2">
+          <h5 class="card-title">{{ item.service_name }}</h5>
+          <h4 class=" text-warning fw-bold">Price: {{ item.price }} </h4>
+          <p class="card-text mx-1 text-muted d-none d-xxl-block">Description: {{ item.description }} </p>
+          <p class="card-text text-dark display-6">Time in Minutes: {{ item.time_in_minutes }}</p>
+          <a class="btn btn-outline-warning my-2 my-sm-0">Book Now</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="alert alert-warning" role="alert">
+          No service available.
+        </div>
       </div>
     </div>
   </div>
+  {% endif %}
 </div>
-{% endif %}
 {% endblock %}
