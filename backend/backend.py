@@ -10,38 +10,31 @@ class Backend:
         self.service_items = None
 
     def request_all_services(self):
+        if not self.service_items == None: 
+            return self.service_items
+        
         # Query all service
         json_services = self.service.query_all_service()
         json_staff = self.service.query_all_staff()
         json_bundle = self.service.query_service_relate_staff()
+ 
+        output = [] 
+        for service_item in json_services:
+            service_id = service_item["id"]
 
-        output = []
-        for bundle_item in json_bundle:
-            service_id = int(bundle_item["service_id"])
-            staff_id = int(bundle_item["staff_id"])
+            staff_ids_to_filter = [item for item in json_bundle if item['service_id'] == service_id] 
+            staff_list = []
+            for staff_id_filter in staff_ids_to_filter:
+                staff_id = staff_id_filter["staff_id"]
+                selected_staff = next((s for s in json_staff if s["id"] == staff_id), None)
 
-            service_id = bundle_item["service_id"]
-            staff_id = bundle_item["staff_id"]
+                if not(selected_staff == None):
+                    staff_list.append(selected_staff)
 
-            # Find the service and staff based on their IDs
-            selected_service = next(
-                (s for s in json_services if s["id"] == service_id), None)
-            selected_staff = next(
-                (s for s in json_staff if s["id"] == staff_id), None)
+            new_item = service_item.copy()
+            new_item["staff"] = staff_list
+            output.append(new_item)   
 
-            # If both service and staff are found, create the desired output
-            if selected_service and selected_staff:
-                output_item = selected_service.copy()
-                output_item["staff"] = [{
-                    "image": selected_staff["image"],
-                    "staff_code": selected_staff["staff_code"],
-                    "staff_name": selected_staff["staff_name"]
-                }]
-                output.append(output_item)
-
-        print("-----------output---------------")
-        print(output)
-        print("-----------output---------------")
         return output
 
     def request_avalialble_time(self, service_code, staff_code):

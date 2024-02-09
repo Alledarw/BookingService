@@ -1,5 +1,4 @@
 from flask import (Flask, render_template)
-import json
 from backend.backend import Backend
 from frontend.http_request import http_request
 import frontend.utility as utility
@@ -25,21 +24,10 @@ def home():
 
 @app.route('/staff/<service_code>', methods=['GET'])
 def staff(service_code):
-    services = backend.request_all_services()
-    selected_service = None
-    for service_item in services:
-        if service_code == service_item.get("service_id"):
-            print(service_item)
-            selected_service = service_item
-            break
-
-    staff_items = []
-    for service_item in services:
-        staff_list = service_item.get("staffs", [])
-        staff_items.extend(staff_list)
-
-    print(staff_items)
-    return render_template("staff.html", staff_items=staff_items, selected_service=selected_service)
+    backend.service_items = backend.request_all_services() 
+    outcome = next((item for item in backend.service_items if item['service_code'] == service_code), None)
+ 
+    return render_template("staff.html", staff_items=outcome["staff"], selected_service=outcome)
 
 
 # -------- ERROR HANDLER  ------------
