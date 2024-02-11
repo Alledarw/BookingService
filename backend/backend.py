@@ -37,5 +37,12 @@ class Backend:
 
         return output
 
-    def request_avalialble_time(self, service_code, staff_code):
-        print("your code here")
+    def fillter_service(self, text_search):
+        matching_items = []
+        for item in self.service_items:
+            if text_search.lower() in item["service_name"].lower() or text_search.lower() in item["service_code"].lower():
+                matching_items.append(item)
+ 
+        print(matching_items)
+        return matching_items
+

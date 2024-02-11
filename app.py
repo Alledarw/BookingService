@@ -1,4 +1,4 @@
-from flask import (Flask, render_template)
+from flask import (Flask, render_template, request)
 from backend.backend import Backend
 from frontend.http_request import http_request
 import frontend.utility as utility
@@ -17,9 +17,15 @@ def all_service():
 
 # #################### FRONTEND ##########################
 @app.route('/', methods=['GET'], endpoint="home")
-def home():
+def home(): 
     backend.service_items = backend.request_all_services()
-    return render_template("home.html", service_items=backend.service_items)
+    if not (request.args.get('text_search') == None):
+        text_search = request.args.get('text_search')
+        show_service_items = backend.fillter_service(text_search)
+    else:
+        show_service_items = backend.request_all_services()
+
+    return render_template("home.html", service_items=show_service_items)
 
 
 @app.route('/staff/<service_code>', methods=['GET'])
