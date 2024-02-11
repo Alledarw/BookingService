@@ -1,6 +1,6 @@
+DROP TABLE "staff_relate_service";
 DROP TABLE "service";
 DROP TABLE "staff";
-DROP TABLE "staff_relate_service";
 
 -- Create the service table
 CREATE TABLE "service" (
