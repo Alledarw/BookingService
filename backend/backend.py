@@ -8,6 +8,8 @@ class Backend:
         self.db = db()
         self.service = Service(self.db)
         self.service_items = None
+        self.selected_service = None
+        self.selected_staff = None
 
     def request_all_services(self):
         if not self.service_items == None: 
@@ -42,7 +44,9 @@ class Backend:
         for item in self.service_items:
             if text_search.lower() in item["service_name"].lower() or text_search.lower() in item["service_code"].lower():
                 matching_items.append(item)
- 
-        print(matching_items)
         return matching_items
+    
+    def reset_selected_value(self):
+        self.selected_staff = None
+        self.selected_service = None
 
