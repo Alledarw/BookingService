@@ -2,7 +2,7 @@
 {% block title %} Services {% endblock %}
 
 {% block content %}
-<div class="text-center  ">
+<div class="align-items-left">
   <p class="display-4 ">Choose a Service</p>
 </div>
 
@@ -20,7 +20,8 @@
           <h4 class=" text-warning fw-bold">Price: {{ item.price }} </h4>
           <p class="card-text mx-1 text-muted d-none d-xxl-block">Description: {{ item.description }} </p>
           <p class="card-text text-dark display-6">Time in Minutes: {{ item.time_in_minutes }}</p>
-          <a class="btn btn-outline-warning my-2 my-sm-0">Book Now</a>
+          <a href="{{ url_for('staff', service_code=item.service_code) }}"
+            class="btn btn-outline-warning my-2 my-sm-0">Book Now</a>
         </div>
       </div>
     </div>
