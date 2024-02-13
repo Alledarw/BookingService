@@ -1,0 +1,254 @@
+[
+    {
+       "id":1,
+       "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/haircut.svg",
+       "price":200,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Price determined upon selection of time and stylist",
+       "service_code":"S001",
+       "service_name":"Haircut",
+       "time_in_minutes":45,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S001",
+             "staff_name":"John Doe"
+          }
+       ]
+    },
+    {
+       "id":1,
+       "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/haircut.svg",
+       "price":200,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Price determined upon selection of time and stylist",
+       "service_code":"S001",
+       "service_name":"Haircut",
+       "time_in_minutes":45,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S003",
+             "staff_name":"Bob Johnson"
+          }
+       ]
+    },
+    {
+       "id":3,
+       "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/Klippochfa%CC%88rg.svg",
+       "price":1500,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Special offer: Get 20% off on your first visit",
+       "service_code":"S003",
+       "service_name":"Hair Extensions",
+       "time_in_minutes":180,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S002",
+             "staff_name":"Alice Smith"
+          }
+       ]
+    },
+    {
+       "id":3,
+       "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/Klippochfa%CC%88rg.svg",
+       "price":1500,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Special offer: Get 20% off on your first visit",
+       "service_code":"S003",
+       "service_name":"Hair Extensions",
+       "time_in_minutes":180,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S001",
+             "staff_name":"John Doe"
+          }
+       ]
+    },
+    {
+       "id":3,
+       "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/Klippochfa%CC%88rg.svg",
+       "price":1500,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Special offer: Get 20% off on your first visit",
+       "service_code":"S003",
+       "service_name":"Hair Extensions",
+       "time_in_minutes":180,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S003",
+             "staff_name":"Bob Johnson"
+          }
+       ]
+    },
+    {
+       "id":4,
+       "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/haircut.svg",
+       "price":150,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Quick and stylish haircut for men",
+       "service_code":"S004",
+       "service_name":"Men Haircut",
+       "time_in_minutes":30,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S003",
+             "staff_name":"Bob Johnson"
+          }
+       ]
+    },
+    {
+       "id":4,
+       "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/haircut.svg",
+       "price":150,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Quick and stylish haircut for men",
+       "service_code":"S004",
+       "service_name":"Men Haircut",
+       "time_in_minutes":30,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S001",
+             "staff_name":"John Doe"
+          }
+       ]
+    },
+    {
+       "id":5,
+       "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/f%C3%A4rgning.svg",
+       "price":800,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Transform your look with professional coloring",
+       "service_code":"S005",
+       "service_name":"Coloring",
+       "time_in_minutes":90,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S002",
+             "staff_name":"Alice Smith"
+          }
+       ]
+    },
+    {
+       "id":6,
+       "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/permanent.svg",
+       "price":300,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Perfect your hairstyle with professional styling",
+       "service_code":"S006",
+       "service_name":"Styling",
+       "time_in_minutes":60,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S003",
+             "staff_name":"Bob Johnson"
+          }
+       ]
+    },
+    {
+       "id":6,
+       "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/permanent.svg",
+       "price":300,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Perfect your hairstyle with professional styling",
+       "service_code":"S006",
+       "service_name":"Styling",
+       "time_in_minutes":60,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S001",
+             "staff_name":"John Doe"
+          }
+       ]
+    },
+    {
+       "id":6,
+       "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/permanent.svg",
+       "price":300,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Perfect your hairstyle with professional styling",
+       "service_code":"S006",
+       "service_name":"Styling",
+       "time_in_minutes":60,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S002",
+             "staff_name":"Alice Smith"
+          }
+       ]
+    },
+    {
+       "id":7,
+       "image":"https://example.com/event-hairstyle.jpg",
+       "price":1200,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Create a memorable event hairstyle for special occasions",
+       "service_code":"S007",
+       "service_name":"Event Hairstyle",
+       "time_in_minutes":90,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S003",
+             "staff_name":"Bob Johnson"
+          }
+       ]
+    },
+    {
+       "id":7,
+       "image":"https://example.com/event-hairstyle.jpg",
+       "price":1200,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Create a memorable event hairstyle for special occasions",
+       "service_code":"S007",
+       "service_name":"Event Hairstyle",
+       "time_in_minutes":90,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S001",
+             "staff_name":"John Doe"
+          }
+       ]
+    },
+    {
+       "id":8,
+       "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/fransarobryn.svg",
+       "price":600,
+       "created":"2024-02-04T10:07:09.23791",
+       "updated":"2024-02-04T10:07:09.23791",
+       "description":"Achieve longer and fuller lashes",
+       "service_code":"S008",
+       "service_name":"Eyelash Extensions",
+       "time_in_minutes":60,
+       "staff":[
+          {
+             "image":"https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg",
+             "staff_code":"S002",
+             "staff_name":"Alice Smith"
+          }
+       ]
+    }
+ ]

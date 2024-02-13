@@ -1,34 +1,43 @@
 {% extends 'base.html' %}
-{% block title %} Welcome title {% endblock %}
+{% block title %} Services {% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-  <h1 class="mb-4">Our Services</h1>
+<div class="align-items-left">
+  <p class="display-4 ">Choose a Service</p>
+</div>
 
-  <div class="row">
-    {% if service_items %}
+<div class="container">
+  {% if service_items %}
+
+  <div class="row align-items-center d-flex justify-content-center">
     {% for item in service_items %}
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"> {{ item.service_name }} </h5>
-          <p class="card-text">{{ item.description }} </p>
-          <img class="card-img-top" alt="{{ item.service_name }}" src="{{ item.image }}">
-          <h5 class="card-title">Staff</h5>
-          {% for staff in item.staffs %}
-          <h6 class="card-text">{{ staff.staff_name}} </h5>
-            {% endfor %}
+    <div class="col-sm-6 col-md-4 col-lg-3 mb-3 ">
+      <div class="card border-0 ">
+        <img src="{{ item.image }}" class=" card-img-top mx-auto img-fluid d-block custom-image-size "
+          alt="Service Image">
+        <div class="card-body text-center py-2">
+          <h5 class="card-title">{{ item.service_name }}</h5>
+          <h4 class=" text-warning fw-bold">Price: {{ item.price }} </h4>
+          <p class="card-text mx-1 text-muted d-none d-xxl-block">Description: {{ item.description }} </p>
+          <p class="card-text text-dark display-6">Time in Minutes: {{ item.time_in_minutes }}</p>
+          <a href="{{ url_for('staff', service_code=item.service_code) }}"
+            class="btn btn-outline-warning my-2 my-sm-0">Book Now</a>
         </div>
       </div>
     </div>
     {% endfor %}
-
-    {% else %}
-    <div class="">
-      <h3 class="">No services </h3>
-    </div>
-    {% endif %}
   </div>
-</div>
 
+  {% else %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="alert alert-warning" role="alert">
+          No service available.
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

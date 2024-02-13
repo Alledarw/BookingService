@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %} Welcome title {% endblock %}
+
+{% block head %}
+{{ super() }}
+<!-- No need to include the Bootstrap CSS again, as it's included in the base.html -->
+<link rel="stylesheet" href="{{ url_for('static', filename='staff_styles.css') }}">
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+  {% if selected_service %}
+  <div class="row">
+    <div class="col-sm-2 col-md-2 col-lg-2 p-1 align-items-top"><img src="{{ selected_service.image }}"></div>
+        <div class="col-sm-auto col-md-auto col-lg-auto p-1">
+          <div class="h4 font-weight-normal">
+            Staff : {{ selected_staff.staff_name }}<br/>
+            Service: {{ selected_service.service_name }}<br/>
+            Price: {{ selected_service.price }} <br/>
+            Time in Minutes: {{ selected_service.time_in_minutes }}<br/>
+          </div>
+        </div> 
+    </div>
+  </div>
+  {% endif %}
+  
+  
+ 
+    <!-- Time -->
+    <p class="h3">Select reserve appoitment</p>
+    <div class="row">
+      <div class="col-sm-6 col-md-3 col-lg-3 h5 m-2 p-2 bg-success text-center"> 12.00 - 12.30 </div>
+      <div class="col-sm-6 col-md-3 col-lg-3 h5 m-2 p-2 bg-warning text-center"> 12.00 - 12.30 </div>
+      <div class="col-sm-6 col-md-3 col-lg-3 h5 m-2 p-2 bg-success text-center"> 12.00 - 12.30 </div>
+      <div class="col-sm-6 col-md-3 col-lg-3 h5 m-2 p-2 bg-success text-center"> 12.00 - 12.30 </div>
+      <div class="col-sm-6 col-md-3 col-lg-3 h5 m-2 p-2 bg-success text-center"> 12.00 - 12.30 </div>
+      <div class="col-sm-6 col-md-3 col-lg-3 h5 m-2 p-2 bg-success text-center"> 12.00 - 12.30 </div>
+      <div class="col-sm-6 col-md-3 col-lg-3 h5 m-2 p-2 bg-success text-center"> 12.00 - 12.30 </div>
+      <div class="col-sm-6 col-md-3 col-lg-3 h5 m-2 p-2 bg-success text-center"> 12.00 - 12.30 </div>
+      <div class="col-sm-6 col-md-3 col-lg-3 h5 m-2 p-2 bg-success text-center"> 12.00 - 12.30 </div>
+      <div class="col-sm-6 col-md-3 col-lg-3 h5 m-2 p-2 bg-success text-center"> 12.00 - 12.30 </div>
+
+    </div>
+    
+    
+    <div class="col-sm-auto col-md-auto col-lg-auto p-1">
+     
+        
+    </div>
+  </div>
+ 
+      
+  
+  
+</div>
+{% endblock %}
