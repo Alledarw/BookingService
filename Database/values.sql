@@ -21,7 +21,7 @@ VALUES
     ('S003', 'Bob Johnson', 'https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg', 'Junior Stylist');
 
 
-select 
+
 
 -- Insert staff_relate_service values
 INSERT INTO "staff_relate_service" ("srs_id", "service_id", "staff_id")
