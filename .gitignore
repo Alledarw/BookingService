@@ -10,3 +10,4 @@ config.py
  
 /test/*
 *dummy*
+.env 
