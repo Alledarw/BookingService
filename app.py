@@ -40,14 +40,17 @@ def staff(service_code):
                            staff_items=backend.selected_service["staff"], 
                            selected_service=backend.selected_service)
 
-@app.route('/reserve_time/<staff_code>', methods=['GET'])
+@app.route('/reserve_time/<staff_code>', methods=['GET'], endpoint="reserve_time")
 def reserve_time(staff_code):
     if backend.selected_service == None:
-        redirect(url_for('home'))
-
+        redirect(url_for('home')) 
+   
     backend.selected_staff = next(
         (item for item in backend.selected_service["staff"] if item['staff_code'] == staff_code), None)
     
+    if backend.selected_staff == None:
+        redirect(url_for('home'))
+
     if backend.selected_staff == None:
         service_code = backend.selected_service["service_code"]
         redirect(url_for('staff', service_code=service_code))
