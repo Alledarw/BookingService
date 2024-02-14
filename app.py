@@ -42,7 +42,21 @@ def staff(service_code):
 
 @app.route('/reserve_time/<staff_code>', methods=['GET'])
 def reserve_time(staff_code):
-    return "reserve time"
+    if backend.selected_service == None:
+        redirect(url_for('home'))
+
+    backend.selected_staff = next(
+        (item for item in backend.selected_service["staff"] if item['staff_code'] == staff_code), None)
+    
+    if backend.selected_staff == None:
+        service_code = backend.selected_service["service_code"]
+        redirect(url_for('staff', service_code=service_code))
+    
+    return render_template("reserve_time.html", 
+                           selected_service=backend.selected_service, 
+                           selected_staff=backend.selected_staff)
+    
+
 
 
     
