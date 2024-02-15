@@ -65,6 +65,11 @@ def reserve_time(staff_code):
                            )
 
 
+@app.route('/confirmation/<time_slot>', methods=['GET'], endpoint="confirmation")
+def confirmation(time_slot):
+    return render_template("confirmation.html")
+
+
 # -------- ERROR HANDLER  ------------
 app.register_error_handler(404, utility.page_404)
 app.register_error_handler(405, utility.page_405)
