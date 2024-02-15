@@ -12,11 +12,27 @@ class service_db:
             'image', image,
             'price', price,
             'time_in_minutes', time_in_minutes,
-            'is_active', is_active,
-            'updated', updated,
-            'created', created
+            'is_active', is_active
         ) AS json_data
             FROM service;
+        """ 
+        return self.db.execute_return_attributed(query, fetchall=True)
+    
+    def query_service_by_id(self, service_id):
+        if service_id == None: return None
+        
+        query = f"""
+        SELECT jsonb_build_object(
+            'id', id,
+            'service_code', service_code,
+            'service_name', service_name,
+            'description', description,
+            'image', image,
+            'price', price,
+            'time_in_minutes', time_in_minutes,
+            'is_active', is_active
+        ) AS json_data
+            FROM service where id = {service_id};
         """ 
         return self.db.execute_return_attributed(query, fetchall=True)
     
