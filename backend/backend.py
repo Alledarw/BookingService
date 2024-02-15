@@ -1,20 +1,18 @@
 import json
 from backend.connection import connection as db
 from backend.service import service_db as Service
+from backend.appoitment import appoitment_db as Appointment
 
 
 class Backend:
     def __init__(self):
         self.db = db()
+        self.appoitment = Appointment(self.db)
         self.service = Service(self.db)
-        self.service_items = None
-        self.selected_service = None
-        self.selected_staff = None
 
+    # Sprint 2 
+    # Service Feature
     def request_all_services(self):
-        if not self.service_items == None: 
-            return self.service_items
-        
         # Query all service
         json_services = self.service.query_all_service()
         json_staff = self.service.query_all_staff()
@@ -39,14 +37,68 @@ class Backend:
 
         return output
 
-    def fillter_service(self, text_search):
-        matching_items = []
-        for item in self.service_items:
-            if text_search.lower() in item["service_name"].lower() or text_search.lower() in item["service_code"].lower():
-                matching_items.append(item)
-        return matching_items
-    
-    def reset_selected_value(self):
-        self.selected_staff = None
-        self.selected_service = None
+    # Sprint 2 
+    # Book feature
+    def request_reserve_times(self, service_id, staff_id): 
+        reserve_time_slots = []
+
+        if service_id == None: 
+            return reserve_time_slots
+        
+        if staff_id == None: 
+            return reserve_time_slots
+        
+        #Service info
+        service_time = None
+        service_items = self.request_all_services()
+        for item in service_items:
+            if int(item['id']) == int(service_id):
+                service_time = item["time_in_minutes"]
+                break
+        
+        if service_time == None: 
+            return reserve_time_slots 
+
+        #Reset needed values
+        self.appoitment.reset_value()
+        self.appoitment.service_id = service_id
+        self.appoitment.staff_id = staff_id
+        self.appoitment.service_time = service_time
+
+        #1. get booking schedule
+        schedule_items = self.appoitment.get_service_reate_staff(staff_id)
+        # 2. get daily time period depends for the service
+        #get daily time slots
+        daily_time_slots = self.appoitment.get_daily_time_slots()
+        for _, daily_time_slot in enumerate(daily_time_slots):
+            day = daily_time_slot["day"]
+            time_slots = daily_time_slot["time_slot"]
+ 
+            time_period = self.appoitment.get_reserve_time_peroid(time_slots) 
+            reserve_time_slots.append({"day": day, "reserve_time": time_period}) 
+        
+       
+        #3. set to true if reserve_time_slots has booked
+        for schedule_item in schedule_items:
+            # Find the item with the matching day
+            matching_item = next((item for item in reserve_time_slots if item['day'] == schedule_item['booked_date']), None)
+
+            # Check if the booked_date matches the day in the item
+            if not matching_item == None:
+                # Iterate over each reserve_time in the item
+                for reserve_time in matching_item['reserve_time']:
+                    # Check if start_at and end_at match the corresponding time in schedule_item
+                    if (
+                        schedule_item['start_at'] == reserve_time['from']
+                        and schedule_item['end_at'] == reserve_time['to']
+                    ):
+                        # Set taken to True
+                        reserve_time['taken'] = True
+        
+        #4. remove item if taken = true
+        filtered_data = [
+                {"day": item["day"], "reserve_time": [time for time in item["reserve_time"] if not time["taken"]]}
+                for item in reserve_time_slots]
+        #5. return
+        return filtered_data
 

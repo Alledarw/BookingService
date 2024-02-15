@@ -9,3 +9,9 @@ SELECT JSON_BUILD_OBJECT(
                             'is_booked', is_booked
                             ) AS json_data
                             FROM appointment_scheduling where srs_id IN (2, 5, 6, 9, 12, 15);
+
+
+SELECT JSON_BUILD_OBJECT(
+                        'srs_id', srs_id
+                        ) AS json_data
+                        FROM staff_relate_service where staff_id = 3
