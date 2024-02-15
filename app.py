@@ -1,4 +1,4 @@
-from flask import (Flask, render_template, request, redirect, url_for)
+from flask import (Flask, render_template, request, redirect, url_for, json)
 from backend.backend import Backend
 from frontend.http_request import http_request
 import frontend.utility as utility
@@ -17,7 +17,7 @@ def all_service():
 
 # #################### FRONTEND ##########################
 @app.route('/', methods=['GET'], endpoint="home")
-def home(): 
+def home():
     backend.reset_selected_value()
 
     backend.service_items = backend.request_all_services()
@@ -36,36 +36,33 @@ def staff(service_code):
     backend.selected_service = next(
         (item for item in backend.service_items if item['service_code'] == service_code), None)
 
-    return render_template("staff.html", 
-                           staff_items=backend.selected_service["staff"], 
+    return render_template("staff.html",
+                           staff_items=backend.selected_service["staff"],
                            selected_service=backend.selected_service)
+
 
 @app.route('/reserve_time/<staff_code>', methods=['GET'], endpoint="reserve_time")
 def reserve_time(staff_code):
+
     if backend.selected_service == None:
-        redirect(url_for('home')) 
-   
-    backend.selected_staff = next(
-        (item for item in backend.selected_service["staff"] if item['staff_code'] == staff_code), None)
-    
-    if backend.selected_staff == None:
-        redirect(url_for('home'))
+        return redirect(url_for('home'))
+
+    if not backend.selected_service["staff"] == None:
+        backend.selected_staff = next(
+            (item for item in backend.selected_service["staff"] if item['staff_code'] == staff_code), None)
 
     if backend.selected_staff == None:
         service_code = backend.selected_service["service_code"]
         redirect(url_for('staff', service_code=service_code))
-    
-    return render_template("reserve_time.html", 
-                           selected_service=backend.selected_service, 
-                           selected_staff=backend.selected_staff)
-    
 
+    file = open("time-slot.json", "r", encoding="utf-8")
+    time_slots = json.load(file)
 
-
-    
-
-
-
+    return render_template("reserve_time.html",
+                           selected_service=backend.selected_service,
+                           selected_staff=backend.selected_staff,
+                           time_slots=time_slots
+                           )
 
 
 # -------- ERROR HANDLER  ------------
