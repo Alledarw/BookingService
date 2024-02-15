@@ -17,8 +17,8 @@ VALUES
 INSERT INTO "staff" ("staff_code", "staff_name", "image", "description")
 VALUES 
     ('Staff001', 'John Doe', 'https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg', 'Senior Stylist'),
-    ('Staff001', 'Alice Smith', 'https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg', 'Color Specialist'),
-    ('Staff001', 'Bob Johnson', 'https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg', 'Junior Stylist');
+    ('Staff002', 'Alice Smith', 'https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg', 'Color Specialist'),
+    ('Staff003', 'Bob Johnson', 'https://voady-files.s3.eu-west-1.amazonaws.com/voadyicons/categories/upps%C3%A4ttning.svg', 'Junior Stylist');
 
 -- Insert staff_relate_service values
 INSERT INTO "staff_relate_service" ("srs_id", "service_id", "staff_id")
@@ -42,9 +42,9 @@ VALUES
  
 INSERT INTO appointment_scheduling (srs_id, booking_code, start_at, end_at, booked_date, is_booked, created, updated)
 VALUES
-  (15, 'ABC123', '10:30', '11:59', '2024-02-20', true, NOW(), NOW()),
-  (15, 'DEF456', '09:00', '10:29', '2024-02-20', true, NOW(), NOW()),
-  (2, 'GHI789',  '15:00','16:30', '2024-02-20', true, NOW(), NOW()),
+  (1, 'ABC123', '10:30', '11:59', '2024-02-20', true, NOW(), NOW()),
+  (1, 'DEF456', '09:00', '10:29', '2024-02-20', true, NOW(), NOW()),
+  (1, 'GHI789',  '15:00','16:30', '2024-02-20', true, NOW(), NOW()),
   (15, 'JKL012', '12:00', '13:29', '2024-02-18', true, NOW(), NOW()),
   (15, 'MNO345', '13:30', '14:59', '2024-02-18', true, NOW(), NOW()),
   (15, 'PQR678', '15:00', '16:29', '2024-02-17', false, NOW(), NOW()),
