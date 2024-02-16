@@ -12,10 +12,49 @@ class appoitment_db:
         self.start_time = datetime.strptime("09:00", "%H:%M")
         self.end_time = datetime.strptime("18:00", "%H:%M")
         self.time_increment = timedelta(minutes=self.time_period) 
-  
+    
+    def get_reservation_info(self, booking_code):
+        query = """SELECT JSON_BUILD_OBJECT(
+                            'id', id,
+                            'srs_id', srs_id,
+                            'booking_code', booking_code,
+                            'start_at', start_at,
+                            'end_at', end_at,
+                            'booked_date', booked_date,
+                            'email', email,
+                            'is_booked', is_booked
+                            ) AS json_data
+                            FROM appointment_scheduling where booking_code = '%s';
+                    """   % (booking_code)
 
-    def save_reserve_appointment():
-        print("save") 
+        schedule_info = self.db.execute_return_attributed(query, fetchall=True)
+        if not schedule_info == None : 
+            return {"status": True,
+                "schedule_info": schedule_info
+                } 
+        else:
+            return {"status": False,
+                "message": f"Not found {booking_code}"
+                }
+
+    def save_reserve_appointment(self, day, srs_id, booking_code, start_at, end_at, email):
+        query = f"""
+                SELECT id FROM appointment_scheduling 
+                where srs_id = %s and start_at='%s' and end_at='%s' and booked_date='%s'
+                """ % (srs_id, start_at, end_at, day)
+        
+        
+        rows = self.db.execute_return_attributed(query, fetchall=True)
+        if len(rows) == 0:
+            insert_query = f"""
+            INSERT INTO appointment_scheduling 
+            (booked_date, srs_id, booking_code, start_at, end_at, email, is_booked, created)
+            VALUES ('%s', %s, '%s', '%s', '%s', '%s', %s, NOW()) 
+            """  % (day, srs_id, booking_code, start_at, end_at, email, True)
+            result = self.db.execute_query(insert_query)
+            return result
+        else: 
+            return False
 
 
     def get_appointment_scheduling(self, staff_id):

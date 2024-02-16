@@ -1,7 +1,5 @@
 import requests
-from flask import jsonify, request
-import random
-import string
+from flask import jsonify, request, json
  
 class Frontend:
     def __init__(self):
@@ -10,10 +8,6 @@ class Frontend:
         self.selected_staff = None
         self.time_slots = None
         self.reserve_info = None
-
-    def random_booking_code(self):
-        return ''.join(random.choices(string.ascii_lowercase, k=5))
-
 
     def request_all_services(self):
         #reset value everytime when enter to frontpage
@@ -38,13 +32,6 @@ class Frontend:
             if text_search.lower() in item["service_name"].lower() or text_search.lower() in item["service_code"].lower():
                 matching_items.append(item)
         return matching_items
-    
-    def get_seleted_reserve_time(self, slot_id):
-        # for item in self.time_slots:
-        #     if item["slot_id"] == slot_id:
-        #         return item
-
-        return {}
 
 
     def request_reserve_times(self):
@@ -65,5 +52,25 @@ class Frontend:
             return response.json()
         else:
             return {}
+        
+    def accept_reservation(self,email, reserve_info):
+        if reserve_info == None:
+            return {"status": False}
+        
+        data_dict = json.loads(reserve_info)
+        
+        request_reserve = {"day": data_dict['reserve_info']['day'],
+            "srs_id": data_dict['reserve_info']['srs_id'],
+            "start_at": data_dict['reserve_time']['from'],
+            "end_at": data_dict['reserve_time']['to'],
+            "email": email}
+        
+        request_url = request.url_root + f"/backend/confirm_reservation" 
+        # Send a POST request with the form data
+        response = requests.post(request_url, data=request_reserve)
+        if response.status_code == 200:  # Check for a successful HTTP status code
+            return response.json()
+        else:
+            return {"status": False} 
      
  

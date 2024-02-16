@@ -2,7 +2,8 @@ import json
 from backend.connection import connection as db
 from backend.service import service_db as Service
 from backend.appoitment import appoitment_db as Appointment
-
+import random
+import string
 
 class Backend:
     def __init__(self):
@@ -40,7 +41,39 @@ class Backend:
 
     # Sprint 2 
     # Book feature
-    def request_reserve_times(self, service_id, staff_id): 
+    def get_reservation_info(self, booking_code):
+        return self.appoitment.get_reservation_info(booking_code)
+    
+    def confirm_reservation(self,request):
+        booking_code = self.random_booking_code()
+        result = self.appoitment.save_reserve_appointment(
+            request["day"],
+            request["srs_id"],
+            booking_code,
+            request["start_at"],
+            request["end_at"],
+            request["email"]
+        )
+
+        if result:
+            return {"status": True,
+                    "email": request["email"],
+                    "booking_code": booking_code,
+                    "message": f"You have booked on {request["day"]} {request["start_at"]}-{request["end_at"]}"
+                    }
+        else: 
+            return {"status": False,
+                    "message": f"Somboday has booked on {request["day"]} {request["start_at"]}-{request["end_at"]}"
+                    }
+    
+    def random_booking_code(self):
+        return ''.join(random.choices(string.ascii_lowercase, k=5))
+
+
+    def request_reserve_times(self, request): 
+        staff_id = request['staff_id']
+        service_id = request['service_id']
+
         reserve_time_slots = []
 
         if service_id == None: 
