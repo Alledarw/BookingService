@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import uuid
 
 class appoitment_db: 
     def __init__(self, db):
@@ -6,21 +7,57 @@ class appoitment_db:
        
         self.time_period = 15
         self.reserve_in_advance = 7
-
-        #Service info
+ 
         self.current_date = datetime.now() 
         self.start_time = datetime.strptime("09:00", "%H:%M")
         self.end_time = datetime.strptime("18:00", "%H:%M")
         self.time_increment = timedelta(minutes=self.time_period) 
+    
+    def get_reservation_info(self, booking_code):
+        query = """SELECT JSON_BUILD_OBJECT(
+                            'id', id,
+                            'srs_id', srs_id,
+                            'booking_code', booking_code,
+                            'start_at', start_at,
+                            'end_at', end_at,
+                            'booked_date', booked_date,
+                            'email', email,
+                            'is_booked', is_booked
+                            ) AS json_data
+                            FROM appointment_scheduling where booking_code = '%s';
+                    """   % (booking_code)
+
+        schedule_info = self.db.execute_return_attributed(query, fetchall=True)
+        if not schedule_info == None : 
+            return {"status": True,
+                "schedule_info": schedule_info
+                } 
+        else:
+            return {"status": False,
+                "message": f"Not found {booking_code}"
+                }
+
+    def save_reserve_appointment(self, day, srs_id, booking_code, start_at, end_at, email):
+        query = f"""
+                SELECT id FROM appointment_scheduling 
+                where srs_id = %s and start_at='%s' and end_at='%s' and booked_date='%s'
+                """ % (srs_id, start_at, end_at, day)
         
-        # Define the time range
-        # Get the current date
-        self.current_date = datetime.now() 
-        self.start_time = datetime.strptime("09:00", "%H:%M")
-        self.end_time = datetime.strptime("18:00", "%H:%M")
-        self.time_increment = timedelta(minutes=self.time_period) 
+        
+        rows = self.db.execute_return_attributed(query, fetchall=True)
+        if len(rows) == 0:
+            insert_query = f"""
+            INSERT INTO appointment_scheduling 
+            (booked_date, srs_id, booking_code, start_at, end_at, email, is_booked, created)
+            VALUES ('%s', %s, '%s', '%s', '%s', '%s', %s, NOW()) 
+            """  % (day, srs_id, booking_code, start_at, end_at, email, True)
+            result = self.db.execute_query(insert_query)
+            return result
+        else: 
+            return False
 
-    def get_service_reate_staff(self, staff_id):
+
+    def get_appointment_scheduling(self, staff_id):
         query = """SELECT JSON_BUILD_OBJECT(
                         'srs_id', srs_id
                         ) AS json_data
@@ -58,7 +95,7 @@ class appoitment_db:
           
         #get first time slot
         first_item = time_slots[0]
-        amount_of_slot_of_service = self.service_time/self.time_period
+        amount_of_slot_of_service = self.time_in_minutes/self.time_period
        
         time_from = None
         outcome = []
@@ -69,7 +106,7 @@ class appoitment_db:
             if time_from is None:
                 time_from = first_item["from"] 
       
-            time_to = datetime.strptime(time_from, '%H:%M') + timedelta(minutes=self.service_time) 
+            time_to = datetime.strptime(time_from, '%H:%M') + timedelta(minutes=self.time_in_minutes) 
             
             time_slots,service_slots = self.get_slots_period(time_slots, time_to)
             
@@ -120,6 +157,7 @@ class appoitment_db:
             current_time = self.start_time
             while current_time < self.end_time:
                 time_slot = {
+                    'day': formatted_date,
                     'from': current_time.strftime("%H:%M"),
                     'to': (current_time + self.time_increment).strftime("%H:%M")}
                 time_slots.append(time_slot)
@@ -139,14 +177,13 @@ class appoitment_db:
         first_item = service_time_slot[0]["from"]
         #last_item = service_time_slot[-1]
         last_item = (datetime.strptime(service_time_slot[-1]["to"], '%H:%M') - timedelta(minutes=1)).strftime("%H:%M")
-        return {'from': first_item, 'to': last_item, "taken":False}
+        unique_id = uuid.uuid4()
+        return {"slot_id": unique_id, 'from': first_item, 'to': last_item, "taken":False}
     
     # reset value when call endpoint /backend/reserve_time/<staff_id>/<service_id>
     def reset_value(self):
-        self.service_time = None
-        self.service_id = None
-        self.staff_id = None
-        self.client_id = None
+        self.time_in_minutes = None
+        self.srs_id = None
 
         self.current_date = datetime.now() 
         self.start_time = datetime.strptime("09:00", "%H:%M")

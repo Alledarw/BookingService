@@ -2,7 +2,8 @@ import json
 from backend.connection import connection as db
 from backend.service import service_db as Service
 from backend.appoitment import appoitment_db as Appointment
-
+import random
+import string
 
 class Backend:
     def __init__(self):
@@ -10,7 +11,7 @@ class Backend:
         self.appoitment = Appointment(self.db)
         self.service = Service(self.db)
 
-    # Sprint 2 
+    # Sprint 1
     # Service Feature
     def request_all_services(self):
         # Query all service
@@ -22,11 +23,12 @@ class Backend:
         for service_item in json_services:
             service_id = service_item["id"]
 
-            staff_ids_to_filter = [item for item in json_bundle if item['service_id'] == service_id] 
+            filter_bundle_items = [item for item in json_bundle if item['service_id'] == service_id] 
             staff_list = []
-            for staff_id_filter in staff_ids_to_filter:
-                staff_id = staff_id_filter["staff_id"]
+            for bundle_item in filter_bundle_items:
+                staff_id = bundle_item["staff_id"]
                 selected_staff = next((s for s in json_staff if s["id"] == staff_id), None)
+                selected_staff["srs_id"] = bundle_item["srs_id"]
 
                 if not(selected_staff == None):
                     staff_list.append(selected_staff)
@@ -39,7 +41,39 @@ class Backend:
 
     # Sprint 2 
     # Book feature
-    def request_reserve_times(self, service_id, staff_id): 
+    def get_reservation_info(self, booking_code):
+        return self.appoitment.get_reservation_info(booking_code)
+    
+    def confirm_reservation(self,request):
+        booking_code = self.random_booking_code()
+        result = self.appoitment.save_reserve_appointment(
+            request["day"],
+            request["srs_id"],
+            booking_code,
+            request["start_at"],
+            request["end_at"],
+            request["email"]
+        )
+
+        if result:
+            return {"status": True,
+                    "email": request["email"],
+                    "booking_code": booking_code,
+                    "message": f"You have booked on {request["day"]} {request["start_at"]}-{request["end_at"]}"
+                    }
+        else: 
+            return {"status": False,
+                    "message": f"Somboday has booked on {request["day"]} {request["start_at"]}-{request["end_at"]}"
+                    }
+    
+    def random_booking_code(self):
+        return ''.join(random.choices(string.ascii_lowercase, k=5))
+
+
+    def request_reserve_times(self, request): 
+        staff_id = request['staff_id']
+        service_id = request['service_id']
+
         reserve_time_slots = []
 
         if service_id == None: 
@@ -49,24 +83,33 @@ class Backend:
             return reserve_time_slots
         
         #Service info
-        service_time = None
+        selected_service = None
+        selected_staff = None
         service_items = self.request_all_services()
         for item in service_items:
             if int(item['id']) == int(service_id):
-                service_time = item["time_in_minutes"]
+                selected_service = item 
+                # get selected staff info
+                for staff in item["staff"]:
+                    if int(staff['id']) == int(staff_id):
+                        selected_staff = staff
                 break
         
-        if service_time == None: 
+        if selected_staff == None: 
+            return reserve_time_slots 
+        
+        if selected_service == None: 
             return reserve_time_slots 
 
         #Reset needed values
         self.appoitment.reset_value()
-        self.appoitment.service_id = service_id
-        self.appoitment.staff_id = staff_id
-        self.appoitment.service_time = service_time
+        srs_id = selected_staff["srs_id"]
+        self.appoitment.time_in_minutes = selected_service["time_in_minutes"]
+
+  
 
         #1. get booking schedule
-        schedule_items = self.appoitment.get_service_reate_staff(staff_id)
+        schedule_items = self.appoitment.get_appointment_scheduling(staff_id)
         # 2. get daily time period depends for the service
         #get daily time slots
         daily_time_slots = self.appoitment.get_daily_time_slots()
@@ -75,8 +118,8 @@ class Backend:
             time_slots = daily_time_slot["time_slot"]
  
             time_period = self.appoitment.get_reserve_time_peroid(time_slots) 
-            reserve_time_slots.append({"day": day, "reserve_time": time_period}) 
-        
+            reserve_time_slots.append({"day": day,
+                                        "reserve_time": time_period}) 
        
         #3. set to true if reserve_time_slots has booked
         for schedule_item in schedule_items:
@@ -97,8 +140,18 @@ class Backend:
         
         #4. remove item if taken = true
         filtered_data = [
-                {"day": item["day"], "reserve_time": [time for time in item["reserve_time"] if not time["taken"]]}
+                {"day": item["day"],
+                 "staff_name": selected_staff["staff_name"],
+                                        "staff_code": selected_staff["staff_code"],
+                                        "service_name": selected_service["service_name"],
+                                        "service_code": selected_service["service_code"],
+                                        "time_in_minutes": selected_service["time_in_minutes"],
+                                        "price": selected_service["price"],
+                                        "service_image": selected_service["image"],
+                                        "srs_id": srs_id,
+                "reserve_time": [time for time in item["reserve_time"] if not time["taken"]]}
                 for item in reserve_time_slots]
-        #5. return
+        # #5. Convert the modified dictionary back to JSON and return
+ 
         return filtered_data
 

@@ -29,8 +29,14 @@ class connection:
             try:
                 with self.conn.cursor() as cursor:
                     cursor.execute(query, parameters)
-                    return cursor.fetchall()
+                    if fetchall == True:
+                        return cursor.fetchall()
+                    else: 
+                        self.conn.commit()
+                        return True
             except Exception as e:
+                print(f" ----->> SQL syntex faild {e}")
+                print(e)
                 return None
             finally:
                 # Close the cursor
@@ -53,7 +59,8 @@ class connection:
                     
                     return items
             except Exception as e:
-                print(" >> SQL syntex faild")
+                print(f" ----->> SQL syntex faild {e}")
+                print(e)
                 return None
             finally:
                 # Close the cursor
