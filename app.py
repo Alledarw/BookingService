@@ -83,15 +83,27 @@ def reserve_time(staff_code):
 
 @app.route('/confirmation/<book_type>/<slot_id>', methods=['GET'], endpoint="confirmation")
 def confirmation(book_type, slot_id):
+    #find  slot_id  form frontend.time_slots
+    #show on the frontend
     return render_template("confirmation.html")
-
 
 @app.route('/accept_reservation', methods=['POST'], endpoint="accept_reservation")
 def accept_reservation():
     email = request.form['email'] 
-    #call frontend.random_booking_code()
-    #print out the return value
-    #show on the screen
+    """json_string = 
+    1.call booking_status = frontend.accept_reservation(email,json_string)
+    2.feel free to change the way you get request_reserve values in frontend.accept_reservation
+     ** but I need format 
+
+    request_reserve = {"day": '2024-02-22',
+            "srs_id": 13,
+            "start_at": '15:00',
+            "end_at": '15:59',
+            "email": 'email@mail.com'}
+
+
+    3.print out the return value
+    4.show on the screen"""
     return f"email : {email}"
 
 # -------- ERROR HANDLER  ------------
