@@ -9,27 +9,32 @@ backend = Backend()
 frontend = Frontend()
 
 # #################### BACKEND ##########################
+
+
 @app.route("/backend/services", methods=["GET"])
 def all_service():
     services = backend.request_all_services()
     return services
 
+
 @app.route("/backend/daily_reserve_time", methods=["POST"], endpoint="daily_reserve_time")
-def daily_reserve_time(): 
+def daily_reserve_time():
     staff_id = request.form['staff_id']
     service_id = request.form['service_id']
-    # return only avaliable time slots 
-    return backend.request_reserve_times(service_id, staff_id) 
+    # return only avaliable time slots
+    return backend.request_reserve_times(service_id, staff_id)
 
 # #################### FRONTEND ##########################
+
+
 @app.route('/', methods=['GET'], endpoint="home")
 def home():
-    #reset value everytime when enter to frontpage
+    # reset value everytime when enter to frontpage
     frontend.reset_selected_value()
-    #get all services
+    # get all services
     frontend.service_items = frontend.request_all_services()
 
-    #if search service name
+    # if search service name
     if not (request.args.get('text_search') == None):
         text_search = request.args.get('text_search')
         show_service_items = frontend.fillter_service(text_search)
@@ -41,9 +46,9 @@ def home():
 
 @app.route('/staff/<service_code>', methods=['GET'], endpoint="staff")
 def staff(service_code):
-   #get all services
+   # get all services
     frontend.service_items = frontend.request_all_services()
-    #get the selected service
+    # get the selected service
     frontend.selected_service = next(
         (item for item in frontend.service_items if item['service_code'] == service_code), None)
 
@@ -51,9 +56,10 @@ def staff(service_code):
                            staff_items=frontend.selected_service["staff"],
                            selected_service=frontend.selected_service)
 
+
 @app.route('/reserve_time/<staff_code>', methods=['GET'], endpoint="reserve_time")
 def reserve_time(staff_code):
-    #Redirect to home if selected_service == None
+    # Redirect to home if selected_service == None
     if frontend.selected_service == None:
         return redirect(url_for('home'))
 
@@ -61,26 +67,21 @@ def reserve_time(staff_code):
     if not frontend.selected_service["staff"] == None:
         frontend.selected_staff = next(
             (item for item in frontend.selected_service["staff"] if item['staff_code'] == staff_code), None)
-    
-    #Redirect to home if selected_staff == None
+
+    # Redirect to home if selected_staff == None
     if frontend.selected_staff == None:
         service_code = frontend.selected_service["service_code"]
-        return redirect(url_for('staff', service_code=service_code)) 
+        return redirect(url_for('staff', service_code=service_code))
 
     # get avaliable reserve time slots
     staff_id = frontend.selected_staff["id"]
     service_id = frontend.selected_service["id"]
     time_slots = frontend.request_reserve_times(staff_id, service_id)
-    
-    return render_template("reserve_time.html", 
-                           selected_service=frontend.selected_service, 
+
+    return render_template("reserve_time.html",
+                           selected_service=frontend.selected_service,
                            selected_staff=frontend.selected_staff,
                            time_slots=time_slots)
-    
-
-@app.route('/confirmation/<time_slot>', methods=['GET'], endpoint="confirmation")
-def confirmation(time_slot):
-    return render_template("confirmation.html")
 
 
 @app.route('/confirmation/<time_slot>', methods=['GET'], endpoint="confirmation")
