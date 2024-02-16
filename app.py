@@ -16,10 +16,17 @@ def all_service():
 
 @app.route("/backend/daily_reserve_time", methods=["POST"], endpoint="daily_reserve_time")
 def daily_reserve_time(): 
-    staff_id = request.form['staff_id']
-    service_id = request.form['service_id']
-    # return only avaliable time slots 
-    return backend.request_reserve_times(service_id, staff_id) 
+    dict = request.form.to_dict()
+    return backend.request_reserve_times(dict)
+
+@app.route("/backend/confirm_reservation", methods=["POST"], endpoint="confirm_reservation")
+def confirm_reservation(): 
+    dict = request.form.to_dict()
+    return backend.confirm_reservation(dict)
+
+@app.route("/backend/reservation_info/<booking_codde>", methods=["GET"], endpoint="reservation_info")
+def reservation_info(booking_codde): 
+    return backend.get_reservation_info(booking_codde)
 
 # #################### FRONTEND ##########################
 @app.route('/', methods=['GET'], endpoint="home")
@@ -76,37 +83,16 @@ def reserve_time(staff_code):
 
 @app.route('/confirmation/<book_type>/<slot_id>', methods=['GET'], endpoint="confirmation")
 def confirmation(book_type, slot_id):
-    if frontend.time_slots == None:
-        return redirect(url_for('home'))
-    
-    # Find the dictionary with the specified 'slot_id' and retrieve 'day' as well
-    frontend.reserve_info = next(({'reserve_info': item, 'reserve_time': slot} 
-                       for item in frontend.time_slots for slot in item.get('reserve_time', []) 
-                       if slot['slot_id'] == slot_id), None)
-    if frontend.reserve_info:
-        frontend.reserve_info['reserve_info'].pop('reserve_time', None)
-    else: 
-        return redirect(url_for('home'))
-    
-    #confirmation_page = "confirmation_member.html" if book_type == "member" else "confirmation_guest.html"
-    confirmation_page = "confirmation.html"
-    return render_template(confirmation_page, 
-                           reserve_info=frontend.reserve_info['reserve_info'],
-                           reserve_time=frontend.reserve_info['reserve_time']
-                           )
+    return render_template("confirmation.html")
+
 
 @app.route('/accept_reservation', methods=['POST'], endpoint="accept_reservation")
 def accept_reservation():
-    email = request.form['email']
-    booking_code = frontend.random_booking_code() 
-
-    return f"email : {email} booking code: {booking_code}"
-
-
-@app.route('/confirmation/<time_slot>', methods=['GET'], endpoint="confirmation")
-def confirmation(time_slot):
-    return render_template("confirmation.html")
-
+    email = request.form['email'] 
+    #call frontend.random_booking_code()
+    #print out the return value
+    #show on the screen
+    return f"email : {email}"
 
 # -------- ERROR HANDLER  ------------
 app.register_error_handler(404, utility.page_404)
