@@ -35,12 +35,13 @@ def daily_reserve_time():
     Returns:
     - JSON: A response containing daily reserve times based on the provided parameters.
     """
-    dict = request.form.to_dict() 
-    return backend.request_reserve_times(dict)
+    service_id = request.form["service_id"]
+    staff_id = request.form["staff_id"]
+    return backend.request_reserve_times(service_id, staff_id)
 
 
-@app.route("/backend/confirm_reservation", methods=["POST"], endpoint="confirm_reservation")
-def confirm_reservation():
+@app.route("/backend/save_reservation", methods=["POST"], endpoint="confirm_reservation")
+def save_reservation():
     """
     Endpoint to save a reservation.
     This endpoint accepts a POST request with form data containing necessary parameters.
@@ -55,8 +56,12 @@ def confirm_reservation():
     Returns:
     - JSON: A response confirming the reservation or providing relevant information.
     """
-    dict = request.form.to_dict()
-    return backend.confirm_reservation(dict)
+    day = request.form["day"]
+    srs_id = request.form["srs_id"]
+    start_at = request.form["start_at"]
+    end_at = request.form["end_at"]
+    email = request.form["email"]
+    return backend.save_reservation(day, srs_id, start_at, end_at, email)
 
 
 @app.route("/backend/reservation_info/<booking_code>", methods=["GET"], endpoint="reservation_info")
@@ -116,7 +121,7 @@ def staff(service_code):
     - HTML template: Renders the staff.html template with the list of staff members for the selected service.
     """
     # Redirect to home if selected_service == None
-    if frontend.selected_service == None:
+    if not frontend.service_items:
         return redirect(url_for('home'))
 
     # get the selected service
@@ -186,7 +191,7 @@ def confirmation(book_type, slot_id):
     return render_template("confirmation.html")
 
 
-@app.route('/accept_reservation', methods=['POST'], endpoint="accept_reservation")
+@app.route('/complete_reservation', methods=['POST'], endpoint="complete_reservation")
 def accept_reservation():
     """
     Endpoint to accept a reservation and display the status.
@@ -198,6 +203,7 @@ def accept_reservation():
     Returns:
     - HTML template: Renders the accept_reservation.html template with the booking status.
     """
+    
 
 
     email = request.form['email']
