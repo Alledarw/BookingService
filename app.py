@@ -9,35 +9,85 @@ backend = Backend()
 frontend = Frontend()
 
 # #################### BACKEND ##########################
-
-
 @app.route("/backend/services", methods=["GET"])
 def all_service():
+    """
+    Retrieve all services.
+    This endpoint returns a list of all available services.
+
+    Returns:
+    - JSON: A list of dictionaries containing service information.
+    """
     services = backend.request_all_services()
     return services
 
 
 @app.route("/backend/daily_reserve_time", methods=["POST"], endpoint="daily_reserve_time")
 def daily_reserve_time():
-    dict = request.form.to_dict()
+    """
+    Endpoint to retrieve daily reserve times with status.
+    This endpoint accepts a POST request with form data containing parameters like 'staff_id' and 'service_id'.
+    
+    Args:
+    - request.form['staff_id'] (str): The ID of the staff.
+    - request.form['service_id'] (str): The ID of the service.
+
+    Returns:
+    - JSON: A response containing daily reserve times based on the provided parameters.
+    """
+    dict = request.form.to_dict() 
     return backend.request_reserve_times(dict)
 
 
 @app.route("/backend/confirm_reservation", methods=["POST"], endpoint="confirm_reservation")
 def confirm_reservation():
+    """
+    Endpoint to save a reservation.
+    This endpoint accepts a POST request with form data containing necessary parameters.
+
+    Args:
+    - request.form['day'] (str): Day of the reservation.
+    - request.form['srs_id'] (str): Bundle id for selected service and staff.
+    - request.form['start_at'] (str): Start time.
+    - request.form['end_at'] (str): End time.
+    - request.form['email'] (str): Email.
+
+    Returns:
+    - JSON: A response confirming the reservation or providing relevant information.
+    """
     dict = request.form.to_dict()
     return backend.confirm_reservation(dict)
 
 
-@app.route("/backend/reservation_info/<booking_codde>", methods=["GET"], endpoint="reservation_info")
-def reservation_info(booking_codde):
-    return backend.get_reservation_info(booking_codde)
+@app.route("/backend/reservation_info/<booking_code>", methods=["GET"], endpoint="reservation_info")
+def reservation_info(booking_code):
+    """
+    Endpoint to retrieve reservation information.
+    This endpoint accepts a GET request with the booking code as part of the URL.
+
+    Args:
+    - booking_code (str): The unique booking code associated with the reservation.
+
+    Returns:
+    - JSON: A response containing information about the reservation corresponding to the booking code.
+    """
+    return backend.get_reservation_info(booking_code)
 
 # #################### FRONTEND ##########################
 
 
 @app.route('/', methods=['GET'], endpoint="home")
 def home():
+    """
+    Endpoint for the home page.
+    This endpoint handles a GET request and retrieves all services. Optionally, it filters services based on a search query.
+
+    Args:
+    - request.args.get('text_search') (str, optional): The search query to filter services by name.
+
+    Returns:
+    - HTML template: Renders the home.html template with the list of services to display.
+    """
     # get all services
     frontend.service_items = frontend.request_all_services()
 
@@ -53,9 +103,21 @@ def home():
 
 @app.route('/staff/<service_code>', methods=['GET'], endpoint="staff")
 def staff(service_code):
+    """
+    Endpoint to display staff associated with a selected service.
+
+    This endpoint handles a GET request and redirects to the home page if no service is selected.
+    It retrieves the selected service based on the provided service code and renders the staff.html template.
+
+    Args:
+    - service_code (str): The service code associated with the selected service.
+
+    Returns:
+    - HTML template: Renders the staff.html template with the list of staff members for the selected service.
+    """
     # Redirect to home if selected_service == None
-    # if frontend.selected_service == None:
-    #     return redirect(url_for('home'))
+    if frontend.selected_service == None:
+        return redirect(url_for('home'))
 
     # get the selected service
     frontend.selected_service = next(
@@ -68,6 +130,19 @@ def staff(service_code):
 
 @app.route('/reserve_time/<staff_code>', methods=['GET'], endpoint="reserve_time")
 def reserve_time(staff_code):
+    """
+    Endpoint to display available reservation times for a selected staff member.
+
+    This endpoint handles a GET request and redirects to the home page if no service is selected.
+    It retrieves the selected staff member based on the provided staff code and renders the reserve_time.html template.
+
+    Args:
+    - staff_code (str): The staff code associated with the selected staff member.
+
+    Returns:
+    - HTML template: Renders the reserve_time.html template with the available reservation times for the selected staff.
+    """
+
     # Redirect to home if selected_service == None
     if frontend.selected_service == None:
         return redirect(url_for('home'))
@@ -92,6 +167,20 @@ def reserve_time(staff_code):
 
 @app.route('/confirmation/<book_type>/<slot_id>', methods=['GET'], endpoint="confirmation")
 def confirmation(book_type, slot_id):
+    """
+    Endpoint to display the confirmation page for a booked reservation.
+
+    This endpoint handles a GET request and redirects to the home page if no reservation information is available.
+    It retrieves reservation details based on the provided 'slot_id' and 'book_type', and renders the confirmation.html template.
+
+    Args:
+    - book_type (str): The type of booking, either "member" or "guest".
+    - slot_id (str): The unique identifier for the selected reservation time slot.
+
+    Returns:
+    - HTML template: Renders the confirmation.html template with reservation details.
+    """
+    #TODO
     # find  slot_id  form frontend.time_slots
     # show on the frontend
     return render_template("confirmation.html")
@@ -99,8 +188,21 @@ def confirmation(book_type, slot_id):
 
 @app.route('/accept_reservation', methods=['POST'], endpoint="accept_reservation")
 def accept_reservation():
+    """
+    Endpoint to accept a reservation and display the status.
+
+    This endpoint handles a POST request with the reservation acceptance details.
+    It retrieves the reservation information from the frontend, including the email and reservation details.
+    The reservation acceptance is then processed by the 'accept_reservation' method, and the status is rendered in accept_reservation.html.
+
+    Returns:
+    - HTML template: Renders the accept_reservation.html template with the booking status.
+    """
+
+
     email = request.form['email']
-    """json_string = 
+    """ TODO: 
+    **Optional => check if email is right format 
     1.call booking_status = frontend.accept_reservation(email,json_string)
     2.feel free to change the way you get request_reserve values in frontend.accept_reservation
      ** but I need format 
