@@ -1,0 +1,55 @@
+### Definition of Done (DoD) Checklist - Sprint 2
+
+1. **Coding:**
+   - [ ] I finished writing the code following user story
+   - [ ] The code looks neat and follows Gherkin
+   - [ ] I follow DDD for Book appointment process
+
+2. **Code Check:**
+   - [ ] A teammate looked at my code to make sure it's easy to read and doesn't have mistakes.
+   - [ ] I fixed any issues or suggestions from the teammate.
+
+3. **Testing:**
+   - [ ] I made little tests to check if the code works.
+   - [ ] I tested how the code works with other parts of our project.
+
+4. **Fixing Mistakes:**
+   - [ ] If there were problems (bugs), I fixed them quickly.
+   - [ ] I checked to make sure fixing problems didn't make new problems.
+
+5. **Writing About the Code:**
+   - [ ] I wrote down how to use the code in a special file (README).
+   - [ ] I also wrote notes in the code to help others understand.
+
+6. **Checking with Other Parts:**
+   - [ ] I made sure my code works well with the other things we already made.
+   - [ ] If there were issues, I solved them.
+
+7. **Checking with Users:**
+   - [ ] I let some people use what I made to see if they like it.
+   - [ ] I listened to what they said and fixed things they didn't like.
+
+8. **Getting Permission:**
+   - [ ] People who make decisions said it's okay to use my code.
+   - [ ] Everyone who needs to agree said it's good.
+
+9. **Getting Ready to Use:**
+   - [ ] My code is ready to go to the main project.
+   - [ ] I made sure we can put my code into the real project without problems.
+
+10. **After Using:**
+    - [ ] I checked to make sure everything still works after we put it in the main project.
+    - [ ] If there were issues, I fixed them quickly.
+
+11. **Writing About Changes:**
+    - [ ] I wrote down what changed in a special file (Release Notes).
+    - [ ] I told everyone what version we are using now.
+
+12. **Talking About How We Did:**
+    - [ ] We talked about how things went with the team.
+    - [ ] We wrote down things we can do better next time.
+
+13. **Sharing What I Learned:**
+    - [ ] I told my team what I learned while making the new things.
+    - [ ] I wrote down what I learned in a place where everyone can see.
+
