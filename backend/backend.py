@@ -66,7 +66,7 @@ class Backend:
         return ''.join(random.choices(string.ascii_lowercase, k=5))
 
 
-    def request_reserve_times(self, staff_id, service_id): 
+    def request_reserve_times(self, service_id, staff_id): 
 
         reserve_time_slots = []
 
