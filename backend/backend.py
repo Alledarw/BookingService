@@ -43,36 +43,30 @@ class Backend:
     # Book feature
     def get_reservation_info(self, booking_code):
         return self.appoitment.get_reservation_info(booking_code)
-    
-    def confirm_reservation(self,request):
+    #
+    def save_reservation(self,day, srs_id, start_at, end_at, email):
         booking_code = self.random_booking_code()
-        result = self.appoitment.save_reserve_appointment(
-            request["day"],
-            request["srs_id"],
+        result_status = self.appoitment.save_reserve_appointment(
+            day,
+            srs_id,
             booking_code,
-            request["start_at"],
-            request["end_at"],
-            request["email"]
+            start_at,
+            end_at,
+            email
         )
-
-        if result:
-            return {"status": True,
-                    "email": request["email"],
+       
+        message= "You have booked on" if not result_status else "You have booked on" 
+        return {"status": result_status,
+                    "email": email,
                     "booking_code": booking_code,
-                    "message": f"You have booked on {request["day"]} {request["start_at"]}-{request["end_at"]}"
-                    }
-        else: 
-            return {"status": False,
-                    "message": f"Somboday has booked on {request["day"]} {request["start_at"]}-{request["end_at"]}"
+                    "message": f"{message} on {day} {start_at}-{end_at}"
                     }
     
     def random_booking_code(self):
         return ''.join(random.choices(string.ascii_lowercase, k=5))
 
 
-    def request_reserve_times(self, request): 
-        staff_id = request['staff_id']
-        service_id = request['service_id']
+    def request_reserve_times(self, staff_id, service_id): 
 
         reserve_time_slots = []
 

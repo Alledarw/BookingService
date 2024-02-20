@@ -1,6 +1,85 @@
 {% extends 'base.html' %}
-{% block title %} Booking Confirmation {% endblock %}
+{% block title %} Barbers {% endblock %}
+
+
+{% block head %}
+{{ super() }}
+{% endblock %}
 
 {% block content %}
+
+{% if reserve_info %}
+
+<div class="row">
+    <div class="col-sm-2 col-md-2 col-lg-2 p-1 align-items-top"><img src="{{ reserve_info.service_image }}"></div>
+    <div class="col-sm-auto col-md-auto col-lg-auto p-1">
+        <div class="h4 font-weight-normal">
+            Staff : {{ reserve_info.staff_name }}<br />
+            Service: {{ reserve_info.service_name }}<br />
+            Price: {{ reserve_info.price }} <br />
+            Time in Minutes: {{ reserve_info.time_in_minutes }}<br />
+            Reserve time : {{ reserve_time.from }} - {{ reserve_time.to }}
+        </div>
+    </div>
+</div>
+
+<form method="POST" action="{{ url_for('complete_reservation') }}" id="formConfirmation">
+    <div class="form-row text">
+        <div class="col-md-6 mb-3">
+            <label for="validationServer01">Email</label>
+            <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="">
+        </div>
+        <div class="invalid-feedback is-invalid" id="emailError">sss</div>
+
+    </div>
+    <button class="btn btn-primary" type="button" onclick="validateForm()">Confirm Appointment</button>
+</form>
+{% else %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="alert alert-warning" role="alert">
+                Some thing went wrong, Please try again.
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+<script>
+
+    function validateEmail(email) {
+        // Regular expression for a basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function validateForm() {
+        const emailInput = document.getElementById('email');
+        const emailValue = emailInput.value.trim();
+        const emailError = document.getElementById('emailError');
+
+        // Validate email
+        if (validateEmail(emailValue)) {
+            emailError.textContent = 'Email is valid.';
+            emailError.classList.remove('is-invalid');
+
+            const confirmation = window.confirm('Confirm appointment ?');
+            if (confirmation) {
+                document.getElementById('formConfirmation').submit();
+            }
+        } else {
+            // If invalid, show error message
+            emailInput.classList.add('is-invalid');
+            emailError.textContent = 'Please enter a valid email.';
+        }
+    }
+
+    // Remove validation error class on input focus
+    document.getElementById('email').addEventListener('focus', function () {
+        this.classList.remove('is-invalid');
+    });
+</script>
 
 {% endblock %}

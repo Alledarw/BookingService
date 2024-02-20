@@ -19,44 +19,38 @@
         Staff : {{ selected_staff.staff_name }}<br />
         Service: {{ selected_service.service_name }}<br />
         Price: {{ selected_service.price }} <br />
-        Time in Minutes: {{ selected_service.time_in_minutes }}<br />
+        Servie Time: {{ selected_service.time_in_minutes }} Minutes<br />
+        Reserve Time: <span id="selectedTime">-</span>
       </div>
     </div>
   </div>
 
   {% endif %}
 
-
-
-
 </div>
 
 <p class="h3">Select reserve appoitment</p>
 
 {% if time_slots %}
-<div class="accordion" id="days">
+<div class="accordion" id="accordionDays">
   <div class="row text-center">
     {% for item in time_slots %}
     <div class="col-md-4 col-lg-3">
       <div class="accordion-item bgday">
         <h2 class="accordion-header bgday">
-          <a class="btn accordion-button bgday" type="button" data-bs-toggle="collapse"
+          <a class="btn accordion-button bgday;" type="button" data-bs-toggle="collapse"
             data-bs-target="#collapse-{{ item.day }}" aria-expanded="true" aria-controls="collapse-{{ item.day }}">
-            {{ item.day }}
+            <div class="font-weight-bold">{{ item.day }}</div>
           </a>
         </h2>
         <div id="collapse-{{ item.day }}" class="accordion-collapse collapse" data-bs-parent="#days">
           <div class="accordion-body">
             {% for timeslot in item.reserve_time %}
-            {% if timeslot.taken %}
-            <div class=" h5 m-2 p-2 text-muted">
-              <a href="">{{ timeslot.from }} - {{ timeslot.to }}</a>
+
+            <div class=" h5 m-2 p-2 mb-1 border border-success text-center timeslot" id="{{ timeslot.slot_id}}"
+              onclick="hilightReserveTime(this)">
+              {{ timeslot.from }} - {{ timeslot.to }}
             </div>
-            {% else %}
-            <div class=" h5 m-2 p-2 ">
-              <a href="">{{ timeslot.from }} - {{ timeslot.to }}</a>
-            </div>
-            {% endif %}
             {% endfor %}
           </div>
         </div>
@@ -67,19 +61,28 @@
 </div>
 {% endif %}
 
-
 <div class="row m-4 ">
   <div class="col-md-6 text-right ">
-    <a href="#" class="btn btn-outline-secondary my-2 my-sm-0 ">Book as a guest</a>
+    <button class="btn btn-outline-success my-2 my-sm-0 " disabled id="BookAsGuest"
+      onclick="redirectToConfirmation('guest')">
+      Book as a guest
+    </button>
   </div>
   <div class="col-md-6 ">
-    <a href="#" class="btn btn-outline-secondary my-2 my-sm-0">Book as a member</a>
+    <button class="btn btn-outline-success my-2 my-sm-0" disabled id="BookAsMember"
+      onclick="redirectToConfirmation('member')">
+      Book as a member
+    </button>
   </div>
 
 </div>
 
 
 <script>
+
+
+
+
   var slotId = NaN
   function hilightReserveTime(element) {
 
@@ -89,8 +92,10 @@
       elements[i].classList.add('border', 'border-success');
     }
     // Add 'bg-success' class to the clicked element
-    document.getElementById(element.id).classList.add('bg-success');
+    var selectedTime = document.getElementById(element.id).innerText
+    document.getElementById("selectedTime").innerHTML = selectedTime
 
+    document.getElementById(element.id).classList.add('bg-success');
     document.getElementById("BookAsGuest").disabled = false;
     // ** Enable for next sprint
     //document.getElementById("BookAsMember").disabled = false;

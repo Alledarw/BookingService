@@ -65,7 +65,7 @@ class Frontend:
             "end_at": data_dict['reserve_time']['to'],
             "email": email}
         
-        request_url = request.url_root + f"/backend/confirm_reservation" 
+        request_url = request.url_root + f"/backend/save_reservation" 
         # Send a POST request with the form data
         response = requests.post(request_url, data=request_reserve)
         if response.status_code == 200:  # Check for a successful HTTP status code

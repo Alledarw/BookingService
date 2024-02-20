@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} Barbers {% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<h1>Your booking has confirmed</h1>
+{{booking_status}}
+
+<br />
+<a href="/">Home page</a>
+
+{% endblock %}

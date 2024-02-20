@@ -30,10 +30,12 @@ class appoitment_db:
         schedule_info = self.db.execute_return_attributed(query, fetchall=True)
         if not schedule_info == None : 
             return {"status": True,
-                "schedule_info": schedule_info
+                "booking_code": booking_code,
+                "schedule_info": schedule_info[0]
                 } 
         else:
             return {"status": False,
+                "booking_code": booking_code,
                 "message": f"Not found {booking_code}"
                 }
 
