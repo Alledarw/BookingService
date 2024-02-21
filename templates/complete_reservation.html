@@ -1,15 +1,24 @@
 {% extends 'base.html' %}
+
 {% block title %} Barbers {% endblock %}
 
 {% block head %}
-{{ super() }}
+    {{ super() }}
 {% endblock %}
 
 {% block content %}
-<h1>Your booking has confirmed</h1>
-{{booking_status}}
+    <div class="container mt-5">
+        <h1 class="display-4">Your Booking has been Confirmed</h1>
 
-<br />
-<a href="/">Home page</a>
+        <div class="card mt-3">
+            <div class="card-body">
+                {% for key, value in booking_status.items() %}
+                    <p class="lead"><span class="font-weight-bold">{{ key }}:</span> {{ value }}</p>
+                {% endfor %}
+            </div>
+        </div>
 
+        <hr class="my-4">
+        <a class="btn btn-outline-secondary my-2 my-sm-0" href="/" role="button">Home Page</a>
+    </div>
 {% endblock %}
